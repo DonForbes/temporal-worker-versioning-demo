@@ -1,0 +1,42 @@
+server: 
+  address: 0.0.0.0
+  port: 6080
+
+management:
+  endpoints:
+    web: 
+      exposure:
+        include: prometheus,temporalworkerinfo
+
+spring:
+  application:
+    name: "worker-versioning"
+  temporal:
+    namespace: donald-demo.sdvdw
+    workersAutoDiscovery:
+      packages: 
+        - com.donald.demo
+        - io.temporal.spring.boot.autoconfigure.workerversioning
+
+    connection:
+      target: donald-demo.sdvdw.tmprl.cloud:7233
+      mtls:
+        key-file: /Users/donald/stuff/source/certificates/temporal-client.key
+        cert-chain-file: /Users/donald/stuff/source/certificates/temporal-client-leaf.pem
+    # (Note following configuration are not set by default but serve more as reference)
+    workers:
+      - name: MarketingWorker
+        task-queue: MarketingWorkerVersioning
+        deployment-properties:
+          deployment-version: "MarketingVersioningDemo.@project.version@"
+          use-versioning: true
+          default-versioning-behavior: "AUTO_UPGRADE"
+
+
+      - name: OnboardingWorker
+        task-queue: OnboardingWorkerVersioning
+        deployment-properties:
+          deployment-version: "OnboardingVersioningDemo.@project.version@"
+          use-versioning: true
+          default-versioning-behavior: "PINNED"
+
