@@ -1,0 +1,56 @@
+name: temporal-worker-versioning-demo
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+env:
+  BUILDER: "paketobuildpacks/builder-jammy-base/"
+  IMG_NAME: temporal-worker-versioning-demo
+  USERNAME: donaldf
+  BUILDPACK_VERSION: 5.9.5
+
+jobs:
+  register:
+    name: Package, PUblish, Register
+    runs-on:
+    - ubuntu-latest
+    steps:
+    - id: checkout
+      uses: actions/checkout@v3
+      
+    - uses: docker/login-action@v1
+      with:
+        registry: docker.io
+        username: ${{ secrets.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_PASS }}
+        
+    - id: setup-tools
+      uses: buildpacks/github-actions/setup-tools@v${{ env.BUILDPACK_VERSION }}
+      
+    - id: setup-pack
+      uses: buildpacks/github-actions/setup-pack@v${{ env.BUILDPACK_VERSION }}
+      
+    - id: package
+      run: |
+        #!/usr/bin/env bash
+        set -euo pipefail
+        VERSION="V1.0.0-TODO"
+        pack build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --publish ${{ env.IMG_NAME }}:${VERSION}
+        DIGEST="$(crane digest ${{ env.IMG_NAME }}:${VERSION})"
+        echo "id=${{ env.IMG_NAME }}"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "address=${PACKAGE}@${DIGEST}" >> "$GITHUB_OUTPUT"
+      shell: bash
+      env:
+        REPO: docker.io/${{ secrets.DOCKER_HUB_USER }}
+        
+    - id: register
+      uses: docker://ghcr.io/buildpacks/actions/registry/request-add-entry:${{ env.BUILDPACK_VERSION }}
+      with:
+        token:   ${{ secrets.PUBLIC_REPO_TOKEN }}
+        id:      ${{ steps.package.outputs.id }}
+        version: ${{ steps.package.outputs.version }}
+        address: ${{ steps.package.outputs.address }}   
