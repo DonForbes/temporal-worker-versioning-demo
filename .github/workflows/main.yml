@@ -10,6 +10,7 @@ env:
   BUILDER: "paketobuildpacks/builder-jammy-base/"
   IMG_NAME: temporal-worker-versioning-demo
   USERNAME: donaldf
+vars:
   BUILDPACK_VERSION: "5.9.5"
 
 jobs:
@@ -28,10 +29,10 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_PASS }}
         
     - id: setup-tools
-      uses: buildpacks/github-actions/setup-tools@v${{ env.BUILDPACK_VERSION }}
+      uses: buildpacks/github-actions/setup-tools@v${{ vars.BUILDPACK_VERSION }}
       
     - id: setup-pack
-      uses: buildpacks/github-actions/setup-pack@v${{ env.BUILDPACK_VERSION }}
+      uses: buildpacks/github-actions/setup-pack@v${{ vars.BUILDPACK_VERSION }}
       
     - id: package
       run: |
@@ -48,7 +49,7 @@ jobs:
         REPO: docker.io/${{ secrets.DOCKER_HUB_USER }}
         
     - id: register
-      uses: docker://ghcr.io/buildpacks/actions/registry/request-add-entry:${{ env.BUILDPACK_VERSION }}
+      uses: docker://ghcr.io/buildpacks/actions/registry/request-add-entry:${{ vars.BUILDPACK_VERSION }}
       with:
         token:   ${{ secrets.PUBLIC_REPO_TOKEN }}
         id:      ${{ steps.package.outputs.id }}
