@@ -29,10 +29,10 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_PASS }}
         
     - id: setup-tools
-      uses: buildpacks/github-actions/setup-tools@v${{ vars.BUILDPACK_VERSION }}
+      uses: buildpacks/github-actions/setup-tools@v$5.9.5
       
     - id: setup-pack
-      uses: buildpacks/github-actions/setup-pack@v${{ vars.BUILDPACK_VERSION }}
+      uses: buildpacks/github-actions/setup-pack@v5.9.5
       
     - id: package
       run: |
@@ -49,7 +49,7 @@ jobs:
         REPO: docker.io/${{ secrets.DOCKER_HUB_USER }}
         
     - id: register
-      uses: docker://ghcr.io/buildpacks/actions/registry/request-add-entry:${{ vars.BUILDPACK_VERSION }}
+      uses: docker://ghcr.io/buildpacks/actions/registry/request-add-entry:5.9.5
       with:
         token:   ${{ secrets.PUBLIC_REPO_TOKEN }}
         id:      ${{ steps.package.outputs.id }}
