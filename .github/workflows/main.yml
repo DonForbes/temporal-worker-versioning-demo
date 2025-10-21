@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_PASS }}
         
     - id: setup-tools
-      uses: buildpacks/github-actions/setup-tools@v$5.9.5
+      uses: buildpacks/github-actions/setup-tools@v5.9.5
       
     - id: setup-pack
       uses: buildpacks/github-actions/setup-pack@v5.9.5
