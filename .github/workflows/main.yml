@@ -10,8 +10,7 @@ env:
   BUILDER: "paketobuildpacks/builder-jammy-base/"
   IMG_NAME: temporal-worker-versioning-demo
   USERNAME: donaldf
-vars:
-  BUILDPACK_VERSION: "5.9.5"
+
 
 jobs:
   register:
