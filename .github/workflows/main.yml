@@ -10,7 +10,7 @@ env:
   BUILDER: "paketobuildpacks/builder-jammy-base/"
   IMG_NAME: temporal-worker-versioning-demo
   USERNAME: donaldf
-
+  VERSION: "1.0.0"
 
 jobs:
   register:
@@ -37,26 +37,27 @@ jobs:
     - id: setup-pack
       uses: buildpacks/github-actions/setup-pack@v5.9.5
       
-    - id: package
+    - id: build image
       run: |
         #!/usr/bin/env bash
         set -euo pipefail
         # TODO - Get the version from app centrally...
         VERSION="1.0.0"
         
-        pack build ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:$VERSION --builder ${{ env.BUILDER }} --publish      
-        DIGEST="$(crane digest ${{ env.IMG_NAME }}:${VERSION})"
+        pack build ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:${{ env.VERSION  }} --builder ${{ env.BUILDER }} --env BP_JVM_VERSION=25      
+        DIGEST="$(crane digest ${{ env.IMG_NAME }}:${{ env.VERSION }})"
         echo "id=${{ env.IMG_NAME }}"
-        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "version=${{ env.VERSION }}" >> "$GITHUB_OUTPUT"
         echo "address=${PACKAGE}@${DIGEST}" >> "$GITHUB_OUTPUT"
       shell: bash
-      env:
-        REPO: docker.io/${{ secrets.DOCKER_HUB_USER }}
-        
-    - id: register
-      uses: docker://ghcr.io/buildpacks/actions/registry/request-add-entry:5.9.5
-      with:
-        token:   ${{ secrets.PUBLIC_REPO_TOKEN }}
-        id:      ${{ steps.package.outputs.id }}
-        version: ${{ steps.package.outputs.version }}
-        address: ${{ steps.package.outputs.address }}   
+
+  - name: Build and push image
+    uses: docker/build-push-action@v4
+    with:
+      context: .
+      push: true
+      tags: |
+        ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:latest
+        ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:${{ github.sha }}
+        ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:${{ env.VERSION }}
+   
