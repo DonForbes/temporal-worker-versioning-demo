@@ -36,6 +36,12 @@ jobs:
       
     - id: setup-pack
       uses: buildpacks/github-actions/setup-pack@v5.9.5
+
+    - name: set lower case owner name
+      run: |
+        echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+      env:
+        OWNER: '${{ github.repository_owner }}'
       
     - id: build_image
       name: Build Image
@@ -45,23 +51,19 @@ jobs:
         # TODO - Get the version from app centrally...
         VERSION="1.0.0"
         
-        pack build ${{ env.IMG_NAME }}:${{ env.IMG_VERSION  }} --builder ${{ env.BUILDER }} --env BP_JVM_VERSION=25 --path ./java/worker-versioning/    
+        pack build ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION  }} --builder ${{ env.BUILDER }} --env BP_JVM_VERSION=25 --path ./java/worker-versioning/  --publish  
        
       shell: bash
       
-    - name: set lower case owner name
-      run: |
-        echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-      env:
-        OWNER: '${{ github.repository_owner }}'
+
     
-    - name: Build and push image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        push: true
-        tags: |
-          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:latest
-          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ github.sha }}
-          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION }}
+#    - name: Build and push image
+#      uses: docker/build-push-action@v4
+#      with:
+#        context: .
+#        push: true
+#        tags: |
+#          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:latest
+#          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ github.sha }}
+#          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION }}
    
