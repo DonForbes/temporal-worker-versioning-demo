@@ -41,7 +41,9 @@ jobs:
       run: |
         #!/usr/bin/env bash
         set -euo pipefail
-        VERSION="V1.0.0-TODO"
+        # TODO - Get the version from app centrally...
+        VERSION="1.0.0"
+        
         pack build ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:$VERSION --builder ${{ env.BUILDER }} --publish      
         DIGEST="$(crane digest ${{ env.IMG_NAME }}:${VERSION})"
         echo "id=${{ env.IMG_NAME }}"
