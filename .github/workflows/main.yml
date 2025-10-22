@@ -63,5 +63,5 @@ jobs:
         tags: |
           ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:latest
           ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ github.sha }}
-          ghcr.io/${{ enc.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION }}
+          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION }}
    
