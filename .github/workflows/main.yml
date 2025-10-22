@@ -37,7 +37,8 @@ jobs:
     - id: setup-pack
       uses: buildpacks/github-actions/setup-pack@v5.9.5
       
-    - id: build image
+    - id: build_image
+      name: Build Image
       run: |
         #!/usr/bin/env bash
         set -euo pipefail
