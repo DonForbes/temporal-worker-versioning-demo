@@ -48,14 +48,20 @@ jobs:
         pack build ${{ env.IMG_NAME }}:${{ env.IMG_VERSION  }} --builder ${{ env.BUILDER }} --env BP_JVM_VERSION=25 --path ./java/worker-versioning/    
        
       shell: bash
-
+      
+    - name: set lower case owner name
+      run: |
+        echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+      env:
+        OWNER: '${{ github.repository_owner }}'
+    
     - name: Build and push image
       uses: docker/build-push-action@v4
       with:
         context: .
         push: true
         tags: |
-          ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:latest
-          ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:${{ github.sha }}
-          ghcr.io/${{ github.repository_owner }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION }}
+          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:latest
+          ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ github.sha }}
+          ghcr.io/${{ enc.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION }}
    
