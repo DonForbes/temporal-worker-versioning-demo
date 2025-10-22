@@ -44,7 +44,8 @@ jobs:
         set -euo pipefail
         # TODO - Get the version from app centrally...
         VERSION="1.0.0"
-        
+        pwd
+        ls -l
         pack build ${{ env.IMG_NAME }}:${{ env.IMG_VERSION  }} --builder ${{ env.BUILDER }} --env BP_JVM_VERSION=25      
         DIGEST="$(crane digest ${{ env.IMG_NAME }}:${{ env.IMG_VERSION }})"
         echo "id=${{ env.IMG_NAME }}"
