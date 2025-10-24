@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-worker-versioning
+  labels:
+    app: temporal-worker-versioning
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: temporal-worker-versioning
+  template:
+    metadata:
+      labels:
+        app: temporal-worker-versioning
+    spec:
+      containers:
+        - name: temporal-worker-versioning-demo
+          image: ghcr.io/donforbes/temporal-worker-versioning-demo:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: ENCRYPT_PAYLOADS
+              value: "false"
+            - name: TEMPORAL_ADDRESS
+              value: donald-demo.sdvdw.tmprl.cloud:7233
+            - name: TEMPORAL_NAMESPACE
+              value: donald-demo.sdvdw
+            - name: TEMPORAL_CERT_PATH
+              value: /etc/certs/tls.crt
+            - name: TEMPORAL_KEY_PATH
+              value: /etc/certs/tls.key
+          volumeMounts:
+            - mountPath: /etc/certs
+              name: certs
+      volumes:
+        - name: certs
+          secret:
+            defaultMode: 420
+            secretName: temporal-auth-tls
