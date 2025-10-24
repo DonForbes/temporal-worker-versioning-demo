@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: temporal-worker-versioning-ingress
+  labels:
+    app: temporal-worker-versioning
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`worker-versioning.tmprl-demo.cloud`)
+      services:
+        - kind: Service
+          name: temporal-worker-versioning-service
+          namespace: temporal-worker-versioning
+          passHostHeader: true
+          port: 80
+          responseForwarding:
+            flushInterval: 100ms
