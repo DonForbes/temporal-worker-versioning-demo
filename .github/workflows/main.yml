@@ -1,4 +1,4 @@
-IONname: temporal-worker-versioning-demo
+name: temporal-worker-versioning-demo
 on:
   push:
     branches:
