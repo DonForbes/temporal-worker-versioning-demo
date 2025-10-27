@@ -50,6 +50,7 @@ jobs:
         set -euo pipefail
         # TODO - Get the version from app centrally...
         VERSION="1.0.0"
+        mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f java/worker-versioning/pom.xml
         
         pack build ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${{ env.IMG_VERSION  }} --builder ${{ env.BUILDER }} --env BP_JVM_VERSION=25 --path ./java/worker-versioning/  --publish  
        
