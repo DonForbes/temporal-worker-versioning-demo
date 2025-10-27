@@ -22,6 +22,7 @@ public class WorkerVersioningRESTController {
 
     @GetMapping("hello")
     public ResponseEntity<String> hello() {
+        
         return ResponseEntity.ok("Hello World");
     }
 }
