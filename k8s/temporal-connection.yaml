@@ -1,0 +1,8 @@
+apiVersion: temporal.io/v1alpha1
+kind: TemporalConnection
+metadata:
+  name: donald-demo
+spec:
+  hostPort: "donald-demo.sdvdw.tmprl.cloud:7233"
+  mutualTLSSecretRef:
+    name: temporal-auth-tls

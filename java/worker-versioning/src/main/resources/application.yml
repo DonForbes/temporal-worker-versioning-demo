@@ -28,7 +28,7 @@ spring:
       - name: MarketingWorker
         task-queue: MarketingWorkerVersioning
         deployment-properties:
-          deployment-version: "MarketingVersioningDemo.@project.version@"
+          deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}-Marketing.${TEMPORAL_WORKER_BUILD_ID}"
           use-versioning: true
           default-versioning-behavior: "AUTO_UPGRADE"
 
@@ -36,7 +36,7 @@ spring:
       - name: OnboardingWorker
         task-queue: OnboardingWorkerVersioning
         deployment-properties:
-          deployment-version: "OnboardingVersioningDemo.@project.version@"
+          deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}-Onboarding.${TEMPORAL_WORKER_BUILD_ID}"
           use-versioning: true
           default-versioning-behavior: "PINNED"
 

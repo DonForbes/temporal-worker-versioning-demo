@@ -1,30 +1,42 @@
-apiVersion: apps/v1
-kind: Deployment
+#@ load("@ytt:data", "data")
+---
+apiVersion: temporal.io/v1alpha1
+kind: TemporalWorkerDeployment
 metadata:
-  name: temporal-worker-versioning
+  name: #@ data.values.app_name
   labels:
-    app: temporal-worker-versioning
+    app: #@ data.values.app_name
 spec:
   replicas: 3
+  workerOptions:
+    connectionRef:
+      name: donald-demo
+    temporalNamespace: donald-demo
+  rollout:
+    strategy: Progressive
+    steps: 
+      - rampPercent: 1
+        pauseDuration: 10m
+      - rampPercent: 50
+        pauseDuration: 15m 
+  sunset:
+    scaleddownDelay: 30m
+    deleteDelay: 60m
   selector:
     matchLabels:
-      app: temporal-worker-versioning
+      app: #@ data.values.app_name
   template:
     metadata:
       labels:
-        app: temporal-worker-versioning
+        app: #@ data.values.app_name
     spec:
       containers:
         - name: temporal-worker-versioning-demo
-          image: ghcr.io/donforbes/temporal-worker-versioning-demo:1.0.0
+          image: #@ data.values.image.url
           imagePullPolicy: Always
           env:
             - name: ENCRYPT_PAYLOADS
               value: "false"
-            - name: TEMPORAL_ADDRESS
-              value: donald-demo.sdvdw.tmprl.cloud:7233
-            - name: TEMPORAL_NAMESPACE
-              value: donald-demo.sdvdw
             - name: TEMPORAL_CERT_PATH
               value: /etc/certs/tls.crt
             - name: TEMPORAL_KEY_PATH
