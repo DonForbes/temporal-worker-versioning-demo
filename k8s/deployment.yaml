@@ -11,20 +11,17 @@ spec:
   workerOptions:
     connectionRef:
       name: donald-demo
-    temporalNamespace: donald-demo
+    temporalNamespace: donald-demo.sdvdw
   rollout:
     strategy: Progressive
     steps: 
-      - rampPercent: 1
+      - rampPercentage: 1
         pauseDuration: 10m
-      - rampPercent: 50
+      - rampPercentage: 50
         pauseDuration: 15m 
   sunset:
-    scaleddownDelay: 30m
+    scaledownDelay: 30m
     deleteDelay: 60m
-  selector:
-    matchLabels:
-      app: #@ data.values.app_name
   template:
     metadata:
       labels:

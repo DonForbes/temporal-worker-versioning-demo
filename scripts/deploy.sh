@@ -22,7 +22,6 @@ setup_context() {
 	# Get from git the most recent version of files
         git pull
 	kubectl config set-context --current --namespace=${K8S_NAMESPACE}
-	SCRIPT_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 	export WORKER_VERSION_image__version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${SCRIPT_DIR}/../java/worker-versioning/pom.xml)
 	export WORKER_VERSION_image__url="ghcr.io/${GITHUB_ACCOUNT}/temporal-worker-versioning-demo:${WORKER_VERSION_image__version}"
 }
@@ -31,12 +30,15 @@ create_secrets() {
         kubectl delete secret ${SECRET_NAME}
 	kubectl create secret tls ${SECRET_NAME} --cert=${AUTH_CERT_PATH} --key=${AUTH_KEY_PATH}
 }
+SCRIPT_DIR=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 #
-source setup-env.sh
+echo "Script dir - $SCRIPT_DIR"
+source ${SCRIPT_DIR}/setup-env.sh
 validate
 setup_context
 
-#create_secrets
+echo "NS-$K8S_NAMESPACE"
+create_secrets
 
 env | grep WORKER_VERSION
 ytt -f ${SCRIPT_DIR}/../k8s/deployment.yaml  -f ${SCRIPT_DIR}/../k8s/worker-versioning-values.yaml --data-values-env WORKER_VERSION | kubectl apply -f -
