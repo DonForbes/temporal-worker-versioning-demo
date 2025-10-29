@@ -31,7 +31,10 @@ spring:
           deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}-Marketing.${TEMPORAL_WORKER_BUILD_ID}"
           use-versioning: true
           default-versioning-behavior: "AUTO_UPGRADE"
-
+        workflow-classes:
+          - io.temporal.demos.worker_versioning_workflows.MarketingWorkflowImpl
+        activity-beans:
+          - marketingActivitiesImpl
 
       - name: OnboardingWorker
         task-queue: OnboardingWorkerVersioning
