@@ -15,14 +15,14 @@ spring:
     namespace: ${TEMPORAL_NAMESPACE:default}
     workersAutoDiscovery:
       packages: 
-        - com.donald.demo
+        - io.temporal.demos.worker_versioning
         - io.temporal.spring.boot.autoconfigure.workerversioning
 
     connection:
       target: ${TEMPORAL_ADDRESS:127.0.0.1:7233}
       mtls:
-        key-file: ${TEMPORAL_KEY_PATH}
-        cert-chain-file: ${TEMPORAL_CERT_PATH}
+        key-file: ${TEMPORAL_KEY_PATH:/Users/donald/stuff/source/certificates/temporal-client.key}
+        cert-chain-file: ${TEMPORAL_CERT_PATH:/Users/donald/stuff/source/certificates/temporal-client-leaf.pem}
     # (Note following configuration are not set by default but serve more as reference)
     workers:
       - name: MarketingWorker
@@ -32,7 +32,7 @@ spring:
           use-versioning: true
           default-versioning-behavior: "AUTO_UPGRADE"
         workflow-classes:
-          - io.temporal.demos.worker_versioning_workflows.MarketingWorkflowImpl
+          - io.temporal.demos.worker_versioning.workflows.MarketingWorkflowImpl
         activity-beans:
           - marketingActivitiesImpl
 

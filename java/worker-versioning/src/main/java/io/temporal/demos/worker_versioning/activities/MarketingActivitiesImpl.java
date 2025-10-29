@@ -1,7 +1,11 @@
 package io.temporal.demos.worker_versioning.activities;
 
 import io.temporal.demos.worker_versioning.model.MarketingBundle;
+import io.temporal.spring.boot.ActivityImpl;
+import org.springframework.stereotype.Component;
 
+@Component
+@ActivityImpl
 public class MarketingActivitiesImpl implements MarketingActivities{
 
     @Override

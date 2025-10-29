@@ -6,7 +6,7 @@ import io.temporal.demos.worker_versioning.model.MarketingBundle;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @ActivityInterface
 public interface MarketingActivities {
 
@@ -17,5 +17,5 @@ public interface MarketingActivities {
     public int sendMarketingBlast(MarketingBundle bundle);
 
     @ActivityMethod
-    public MarketingBundle getMarketingResults(MarketingBundle bundle)
+    public MarketingBundle getMarketingResults(MarketingBundle bundle);
 }
