@@ -28,7 +28,7 @@ spring:
       - name: MarketingWorker
         task-queue: MarketingWorkerVersioning
         deployment-properties:
-          deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}-Marketing.${TEMPORAL_WORKER_BUILD_ID}"
+          deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}.${TEMPORAL_WORKER_BUILD_ID}:temporal-worker-versioning.@project.version@"
           use-versioning: true
           default-versioning-behavior: "AUTO_UPGRADE"
         workflow-classes:
