@@ -21,6 +21,14 @@ public class MarketingWorkflowImpl implements MarketingWorkflow {
             this.getActivity(null, "MarketingWorkerVersioning")
                     .getMarketingBundle("TestCampaign");
 
+        // Todo run a few of these concurrently, maybe make a child workflow to be more realistic...
+        this.getActivity("e-mail campaign", "MarketingWorkerVersioning").sendMarketingBlast(bundle);
+
+        // Waiting a bit to show waiting on marketing results coming in.
+        Workflow.sleep(Duration.ofSeconds(30));
+
+        MarketingBundle resultsBundle =
+            this.getActivity(null, "MarketingWorkerVersioning").getMarketingResults(bundle);
 
   }  // End runMarketingCampaign
 
