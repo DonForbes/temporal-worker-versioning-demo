@@ -29,7 +29,7 @@ export default function SubmitUnpinnedWorkflows() {
     setErrorMsg(null)
     try {
       // Use Vite dev proxy: this hits `${VITE_API_BASE_URL}/submitworkflows`
-      await http.post('/submitworkflows', form)
+      await http.post('/start-marketing-workflows', form)
       setSuccessMsg('Workflows submitted successfully.')
     } catch (err: unknown) {
       let message = 'Submission failed.'
