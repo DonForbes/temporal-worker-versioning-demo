@@ -14,7 +14,10 @@ import io.temporal.client.WorkflowClient;
 
 
 @RestController
-@CrossOrigin(origins = {"http://tmprl.cloud:80", "http://localhost:5080"})
+//@CrossOrigin(origins = {"http://tmprl.cloud:80", "http://localhost:5080"})
+@CrossOrigin(origins = "*",
+             allowedHeaders = "*",
+             methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class WorkerVersioningRESTController {
     private static final Logger logger = LoggerFactory.getLogger(WorkerVersioningRESTController.class);
 
