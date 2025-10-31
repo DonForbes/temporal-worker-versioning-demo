@@ -9,7 +9,7 @@ spec:
     - web
   routes:
     - kind: Rule
-      match: Host(`worker-versioning.tmprl-demo.cloud`)
+      match: Hos`)
       services:
         - kind: Service
           name: temporal-worker-versioning-service
