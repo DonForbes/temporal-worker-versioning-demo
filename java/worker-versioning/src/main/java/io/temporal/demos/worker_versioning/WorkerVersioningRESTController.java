@@ -19,12 +19,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@CrossOrigin(
-        origins = "*",
-        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS},
-        allowedHeaders = "*",
-        maxAge = 3600
-)
+// ß@CrossOrigin(
+//        origins = "*",
+//        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS},
+//        allowedHeaders = "*",
+//        maxAge = 3600
+//)
+
 @RestController
 public class WorkerVersioningRESTController {
     private static final Logger logger = LoggerFactory.getLogger(WorkerVersioningRESTController.class);

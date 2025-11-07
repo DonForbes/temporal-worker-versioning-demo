@@ -2,6 +2,7 @@ server:
   address: 0.0.0.0
   port: 6080
 
+
 management:
   endpoints:
     web: 
@@ -11,6 +12,13 @@ management:
 spring:
   application:
     name: "worker-versioning"
+  web:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+      max-age: 3600
   temporal:
     namespace: ${TEMPORAL_NAMESPACE:default}
     workersAutoDiscovery:
