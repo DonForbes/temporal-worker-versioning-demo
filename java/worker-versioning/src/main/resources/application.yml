@@ -12,13 +12,6 @@ management:
 spring:
   application:
     name: "worker-versioning"
-  web:
-    cors:
-      allowed-origins: "*"
-      allowed-methods: "*"
-      allowed-headers: "*"
-      allow-credentials: true
-      max-age: 3600
   temporal:
     namespace: ${TEMPORAL_NAMESPACE:default}
     workersAutoDiscovery:
