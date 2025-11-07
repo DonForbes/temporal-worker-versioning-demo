@@ -19,10 +19,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-
+@CrossOrigin(
+        origins = "*",
+        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS},
+        allowedHeaders = "*",
+        maxAge = 3600
+)
 @RestController
-//@CrossOrigin(origins = {"http://tmprl.cloud:80", "http://localhost:5080"})
-@CrossOrigin(origins = "*",maxAge = 3600)
 public class WorkerVersioningRESTController {
     private static final Logger logger = LoggerFactory.getLogger(WorkerVersioningRESTController.class);
 
@@ -66,11 +69,13 @@ public class WorkerVersioningRESTController {
 
     @RequestMapping(method = RequestMethod.OPTIONS, path = "start-marketing-workflows")
     public ResponseEntity<Void> optionsStartMarketingWorkflows() {
+        System.out.println("In optionsStartMarketingWorkflows");
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(method = RequestMethod.OPTIONS, path = "query-marketing-workflows")
     public ResponseEntity<Void> optionsQueryMarketingWorkflows() {
+        System.out.println("In optionsQueryMarketingWorkflows");
         return ResponseEntity.ok().build();
     }
 }
