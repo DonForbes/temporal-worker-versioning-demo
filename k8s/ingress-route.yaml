@@ -18,8 +18,3 @@ spec:
           port: 80
           responseForwarding:
             flushInterval: 100ms
-          labels:
-            - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-            - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
-            - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-            - "traefik.http.middlewares.cors.headers.addvaryheader=true"
