@@ -62,4 +62,15 @@ public class WorkerVersioningRESTController {
         return ResponseEntity.of(Optional.of(response));
 
     } // End queryMarketingWorkflows
+
+
+    @RequestMapping(method = RequestMethod.OPTIONS, path = "start-marketing-workflows")
+    public ResponseEntity<Void> optionsStartMarketingWorkflows() {
+        return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(method = RequestMethod.OPTIONS, path = "query-marketing-workflows")
+    public ResponseEntity<Void> optionsQueryMarketingWorkflows() {
+        return ResponseEntity.ok().build();
+    }
 }
