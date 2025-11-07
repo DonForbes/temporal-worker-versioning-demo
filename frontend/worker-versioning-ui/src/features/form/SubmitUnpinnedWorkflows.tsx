@@ -3,8 +3,10 @@ import axios from 'axios'
 import http from '../../lib/http/axios'
 import { Box, Button, Container, TextField, Typography, Alert, Stack } from '@mui/material'
 import type { UnpinnedWorkflowsTest } from '../../lib/types/test-types'
+import { useNavigate } from 'react-router-dom'
 
 export default function SubmitUnpinnedWorkflows() {
+  const navigate = useNavigate()
   const [form, setForm] = useState<UnpinnedWorkflowsTest>({
     testPrefix: '',
     numberOfWorkflows: 1,
@@ -28,9 +30,11 @@ export default function SubmitUnpinnedWorkflows() {
     setSuccessMsg(null)
     setErrorMsg(null)
     try {
-      // Use Vite dev proxy: this hits `${VITE_API_BASE_URL}/submitworkflows`
-      await http.post('/start-marketing-workflows', form)
+      // Submit the workflows
+      await http.post('/submitworkflows', form)
       setSuccessMsg('Workflows submitted successfully.')
+      // Navigate to results page for the given prefix
+      navigate(`/results/${encodeURIComponent(form.testPrefix)}`)
     } catch (err: unknown) {
       let message = 'Submission failed.'
       if (axios.isAxiosError(err)) {
