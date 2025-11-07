@@ -10,7 +10,7 @@ public class GlobalCORSConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow all paths
-                .allowedOrigins("*") // Whitelist these origins
+                .allowedOriginPatterns("*") // Whitelist these origins
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // The allowed HTTP methods
                 .allowedHeaders("*")
                 .allowCredentials(true) // Allow credentials
