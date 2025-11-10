@@ -55,7 +55,7 @@ public class WorkerVersioningRESTController {
     {
         // Note - assuming that all workflows in test are for the same worker deployment.  May need to improve this...
         Stream<WorkflowExecutionMetadata> workflowMetadata = client.listExecutions(
-                "WorkflowId STARTS_WITH \"" + request.getWorkflowPrefix() + "\" AND StartTime >= " + this.getStartTime(request.getWorkflowSearchWindow()));
+                "WorkflowId STARTS_WITH \"" + request.getWorkflowPrefix() + "\" AND StartTime >= \"" + this.getStartTime(request.getWorkflowSearchWindow()) + "\"" );
         List<WorkflowExecutionMetadata> wfList = (List<WorkflowExecutionMetadata>)workflowMetadata.toList();
         WorkerVersioningRESTController.logger.info("Workflow Execution Metadata: " + wfList);
 
