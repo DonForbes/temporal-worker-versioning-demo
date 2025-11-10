@@ -46,7 +46,7 @@ public class WorkerVersioningRESTController {
         logger.debug("Received request to start " + config.getNumberOfWorkflows() + " marketing workflows");
         backgroundMarketingWFStart.startMarketingWFInBackground(config);
         logger.debug("Background task started");
-        return ResponseEntity.ok("{ message: Started " + config.getNumberOfWorkflows() + " marketing workflows }");
+        return ResponseEntity.ok("{ \"message\": \"Started " + config.getNumberOfWorkflows() + " marketing workflows\" }");
 
     } // End startMarketingWorkflows
 

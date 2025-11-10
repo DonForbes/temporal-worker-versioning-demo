@@ -7,10 +7,20 @@ import { useNavigate } from 'react-router-dom'
 
 export default function SubmitUnpinnedWorkflows() {
   const navigate = useNavigate()
+  function generateDefaultPrefix(): string {
+    const d = new Date()
+    const pad = (n: number) => n.toString().padStart(2, '0')
+    const yy = d.getFullYear().toString().slice(-2)
+    const MM = pad(d.getMonth() + 1)
+    const DD = pad(d.getDate())
+    const HH = pad(d.getHours())
+    const mm = pad(d.getMinutes())
+    return `${yy}${MM}${DD}-${HH}${mm}`
+  }
   const [form, setForm] = useState<UnpinnedWorkflowsTest>({
-    testPrefix: '',
-    numberOfWorkflows: 1,
-    workflowStartRatePerSecond: 1,
+    testPrefix: generateDefaultPrefix(),
+    numberOfWorkflows: 300,
+    workflowStartRatePerSecond: 5,
   })
 
   const [submitting, setSubmitting] = useState(false)
