@@ -65,9 +65,9 @@ public class BackgroundMarketingWFStart {
 
             logger.info("Background task completed");
         } catch (Exception e) {
-            logger.error("Error in background task", e);
+            logger.error("Error in background task ({})", Thread.currentThread().getName());
         }
-    }
+    }  // End startMarketingWorkflows
 
     private String getMarketingWorkflowTaskQueueName() {
         // Parse the config to pick out the task queue for the activity. (Will be simpler once issue #1647 implemented)

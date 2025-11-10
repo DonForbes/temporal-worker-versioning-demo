@@ -31,7 +31,7 @@ export default function SubmitUnpinnedWorkflows() {
     setErrorMsg(null)
     try {
       // Submit the workflows
-      await http.post('/submitworkflows', form)
+      await http.post('/start-marketing-workflows', form)
       setSuccessMsg('Workflows submitted successfully.')
       // Navigate to results page for the given prefix
       navigate(`/results/${encodeURIComponent(form.testPrefix)}`)
