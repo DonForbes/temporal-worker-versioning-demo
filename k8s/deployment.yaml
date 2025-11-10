@@ -15,9 +15,9 @@ spec:
   rollout:
     strategy: Progressive
     steps: 
-      - rampPercentage: 1
+      - rampPercentage: 10
         pauseDuration: 1m
-      - rampPercentage: 50
+      - rampPercentage: 80
         pauseDuration: 1m
   sunset:
     scaledownDelay: 2m
