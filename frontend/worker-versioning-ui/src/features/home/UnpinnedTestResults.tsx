@@ -21,7 +21,7 @@ export default function UnpinnedTestResults() {
   const [loading, setLoading] = useState<boolean>(true);
   const pollingRef = useRef<number | null>(null);
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);
-  const [searchWindow, setSearchWindow] = useState<number>(10);
+  const [searchWindow, setSearchWindow] = useState<number>(45);
   const [history, setHistory] = useState<Array<{ t: number; percentages: Record<string, number> }>>([]);
   const [seenFullOwnership, setSeenFullOwnership] = useState<boolean>(false);
   const [didFetchFinal, setDidFetchFinal] = useState<boolean>(false);
@@ -46,14 +46,19 @@ export default function UnpinnedTestResults() {
     return Array.from(keys).sort();
   }, [history]);
 
-  function colorFromString(key: string): string {
+  // High-contrast palette sized for typical 2–5 series
+  const PALETTE = ['#1F77B4', '#FF7F0E', '#2CA02C', '#D62728', '#9467BD'];
+  function colorForKey(key: string): string {
+    const idx = allWorkerKeys.indexOf(key);
+    if (idx >= 0) return PALETTE[idx % PALETTE.length];
+    // Fallback for unseen keys (e.g., only in finalResults)
     let hash = 0;
     for (let i = 0; i < key.length; i++) {
       hash = (hash << 5) - hash + key.charCodeAt(i);
       hash |= 0;
     }
     const hue = Math.abs(hash) % 360;
-    return `hsl(${hue}, 60%, 45%)`;
+    return `hsl(${hue}, 70%, 45%)`;
   }
 
   useEffect(() => {
@@ -188,7 +193,7 @@ export default function UnpinnedTestResults() {
             return <line key={v} x1={padding} y1={y} x2={padding + innerW} y2={y} stroke="#eee" />;
           })}
           {allWorkerKeys.map((k) => (
-            <path key={k} d={pathForKey(k)} fill="none" stroke={colorFromString(k)} strokeWidth={2} />
+            <path key={k} d={pathForKey(k)} fill="none" stroke={colorForKey(k)} strokeWidth={2} />
           ))}
           {gridVals.map((v) => {
             const y = yForPercent(v);
@@ -265,7 +270,7 @@ export default function UnpinnedTestResults() {
                 ) : (
                   allWorkerKeys.map(k => (
                     <Stack key={k} direction="row" spacing={1} alignItems="center">
-                      <Box sx={{ width: 12, height: 12, bgcolor: colorFromString(k), borderRadius: 0.5 }} />
+                      <Box sx={{ width: 12, height: 12, bgcolor: colorForKey(k), borderRadius: 0.5 }} />
                       <Typography variant="body2">
                         {k}: {(latestPercentages[k] ?? 0).toFixed(1)}%
                       </Typography>
@@ -298,7 +303,7 @@ export default function UnpinnedTestResults() {
                                   </Typography>
                                 </Stack>
                                 <Box sx={{ height: 12, backgroundColor: "#eee", borderRadius: 1, overflow: "hidden" }}>
-                                  <Box sx={{ height: 12, width: `${percent}%`, backgroundColor: colorFromString(w.workerVersion) }} />
+                                  <Box sx={{ height: 12, width: `${percent}%`, backgroundColor: colorForKey(w.workerVersion) }} />
                                 </Box>
                               </Box>
                             );
