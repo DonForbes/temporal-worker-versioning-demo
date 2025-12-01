@@ -40,7 +40,11 @@ spring:
       - name: OnboardingWorker
         task-queue: OnboardingWorkerVersioning
         deployment-properties:
-          deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}-Onboarding.${TEMPORAL_WORKER_BUILD_ID}"
+          deployment-version: "${TEMPORAL_DEPLOYMENT_NAME}.${TEMPORAL_WORKER_BUILD_ID}"
           use-versioning: true
           default-versioning-behavior: "PINNED"
+        workflow-classes:
+          - io.temporal.demos.worker_versioning.workflows.OnboardingWorkflowImpl
+        activity-beans:
+          - onboardingActivitiesImpl
 

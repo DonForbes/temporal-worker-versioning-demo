@@ -22,6 +22,7 @@ export default function UnpinnedTestResults() {
   const pollingRef = useRef<number | null>(null);
   const [pollingEnabled, setPollingEnabled] = useState<boolean>(true);
   const [searchWindow, setSearchWindow] = useState<number>(45);
+  const [getRunning, setGetRunning] = useState<boolean>(true);
   const [history, setHistory] = useState<Array<{ t: number; percentages: Record<string, number> }>>([]);
   const [seenFullOwnership, setSeenFullOwnership] = useState<boolean>(false);
   const [didFetchFinal, setDidFetchFinal] = useState<boolean>(false);
@@ -31,7 +32,8 @@ export default function UnpinnedTestResults() {
   const body = useMemo(() => ({
     workflowPrefix: workflowPrefix ?? "",
     workflowSearchWindow: searchWindow,
-  }), [workflowPrefix, searchWindow]);
+    getRunning,
+  }), [workflowPrefix, searchWindow, getRunning]);
 
   // Latest percentages for legend
   const latestPercentages = useMemo(() => {
@@ -110,6 +112,7 @@ export default function UnpinnedTestResults() {
               const finalRes = await http.post<QueryResponse>("/query-marketing-workflows", {
                 workflowPrefix: workflowPrefix ?? "",
                 workflowSearchWindow: 3600,
+                getRunning: false,
               });
               setFinalResults(finalRes.data);
             } catch (e) {
@@ -227,7 +230,7 @@ export default function UnpinnedTestResults() {
     <Container maxWidth="md" sx={{ mt: 4, mb: 6 }}>
       <Stack spacing={2}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Typography variant="h4">Unpinned Test Results</Typography>
+          <Typography variant="h4">Marketing workflow (Unpinned) Test Results</Typography>
           <Stack direction="row" spacing={2} alignItems="center">
             <TextField
               label="Search window (s)"
@@ -239,6 +242,15 @@ export default function UnpinnedTestResults() {
                 const val = Number(e.target.value);
                 setSearchWindow(Number.isFinite(val) && val > 0 ? val : 1);
               }}
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={getRunning}
+                  onChange={(_, checked) => setGetRunning(checked)}
+                />
+              }
+              label="Running only"
             />
             <FormControlLabel
               control={
