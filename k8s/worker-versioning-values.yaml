@@ -1,3 +1,4 @@
 #@data/values
 ---
 app_name: temporal-worker-versioning
+app_name_ui: temporal-worker-versioning-ui

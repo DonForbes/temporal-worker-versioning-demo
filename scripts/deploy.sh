@@ -24,6 +24,8 @@ setup_context() {
 	kubectl config set-context --current --namespace=${K8S_NAMESPACE}
 	export WORKER_VERSION_image__version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f ${SCRIPT_DIR}/../java/worker-versioning/pom.xml)
 	export WORKER_VERSION_image__url="ghcr.io/${GITHUB_ACCOUNT}/temporal-worker-versioning-demo:${WORKER_VERSION_image__version}"
+	export WORKER_VERSION_uiimage__url="ghcr.io/${GITHUB_ACCOUNT}/temporal-worker-versioning-demo-ui:latest"
+
 }
 create_secrets() {
 	SECRET_NAME=temporal-auth-tls
@@ -41,9 +43,10 @@ echo "NS-$K8S_NAMESPACE"
 create_secrets
 
 env | grep WORKER_VERSION
+ytt -f ${SCRIPT_DIR}/../k8s/frontend-deployment.yaml  -f ${SCRIPT_DIR}/../k8s/worker-versioning-values.yaml --data-values-env WORKER_VERSION | kubectl apply -f -
 ytt -f ${SCRIPT_DIR}/../k8s/worker-deployment.yaml  -f ${SCRIPT_DIR}/../k8s/worker-versioning-values.yaml --data-values-env WORKER_VERSION | kubectl apply -f -
 kubectl apply -f ${SCRIPT_DIR}/../k8s/temporal-connection.yaml
-kubectl apply -f ${SCRIPT_DIR}/../k8s/ingress-route.yaml
+#kubectl apply -f ${SCRIPT_DIR}/../k8s/ingress-route.yaml
 kubectl apply -f ${SCRIPT_DIR}/../k8s/service.yaml
 kubectl get pods
 kubectl get secrets 
