@@ -1,4 +1,4 @@
-name: temporal-worker-versioning-demo
+name: build-worker-versioning-backend-image
 on:
   push:
     branches:
