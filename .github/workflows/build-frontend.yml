@@ -51,7 +51,7 @@ jobs:
         set -euo pipefail
         IMG_VERSION=latest
         
-        pack build ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${IMG_VERSION} --builder ${{ env.BUILDER }} --path ./frontend --buildpack paketo-buildpacks/nodejs  --publish  
+        pack build ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${IMG_VERSION} --builder ${{ env.BUILDER }} --path ./frontend/worker-versioning-ui --buildpack paketo-buildpacks/nodejs  --publish  
        
       shell: bash
       
