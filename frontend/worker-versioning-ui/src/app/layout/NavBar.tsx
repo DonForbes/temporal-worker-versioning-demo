@@ -1,4 +1,3 @@
-import React from "react";
 import { AppBar, Toolbar, Box, Typography, Container, MenuItem } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
