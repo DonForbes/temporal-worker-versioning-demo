@@ -9,7 +9,7 @@ on:
     branches:
       - main
 env:
-  BUILDER: "paketobuildpacks/builder-jammy-base"
+  BUILDER: "paketobuildpacks/builder:base"
   IMG_NAME: temporal-worker-versioning-demo-ui
 
 jobs:
@@ -51,7 +51,7 @@ jobs:
         set -euo pipefail
         IMG_VERSION=latest
         
-        pack build ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${IMG_VERSION} --builder ${{ env.BUILDER }} --path ./frontend/  --publish  
+        pack build ghcr.io/${{ env.OWNER_LC }}/${{ env.IMG_NAME }}:${IMG_VERSION} --builder ${{ env.BUILDER }} --path ./frontend --buildpack paketo-buildpacks/nodejs  --publish  
        
       shell: bash
       
