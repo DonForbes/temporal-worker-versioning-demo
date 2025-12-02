@@ -1,0 +1,11 @@
+// Source - https://stackoverflow.com/a
+// Posted by Robin G, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-12-02, License - CC BY-SA 4.0
+
+{
+    "root": "./dist",
+    "clean_urls": true,
+    "routes": {
+      "/**": "index.html"
+    }
+  }  
