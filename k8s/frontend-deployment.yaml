@@ -20,12 +20,12 @@ spec:
         - name: #@ data.values.app_name_ui
           image: #@ data.values.uiimage.url
           ports:
-            - containerPort: 5080
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: #@ data.values.app_name_ui
+  name: #@ data.values.app_name_ui + "-service"
 spec:
   type: NodePort
   selector:
@@ -33,5 +33,3 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: 5080
-      nodePort: 30080 
