@@ -5,12 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "react-scripts build",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview", 
-    "start": "serve -s dist -l ${PORT:-8080}",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "serve -s dist -l ${PORT:-8080}"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
