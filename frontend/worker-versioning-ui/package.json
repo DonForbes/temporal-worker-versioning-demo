@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "react-scripts build",  // "tsc -b && vite build",
+    "build": "react-scripts build",
     "lint": "eslint .",
     "preview": "vite preview", 
     "start": "serve -s dist -l ${PORT:-8080}",
