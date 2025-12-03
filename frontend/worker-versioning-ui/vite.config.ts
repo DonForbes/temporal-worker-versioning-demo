@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const envFromFiles = loadEnv(mode, process.cwd(), 'VITE_')
-  const apiBaseUrl = process.env.VITE_API_BASE_URL || envFromFiles.VITE_API_BASE_URL || 'http://temporal-worker-versioning-service:80' //  Default to use the service on the assumption the backend is running in this cluster.
+  const apiBaseUrl = process.env.VITE_API_BASE_URL || envFromFiles.VITE_API_BASE_URL || 'http://temporal-worker-versioning-service.temporal-worker-versioning:6080' //  Default to use the service on the assumption the backend is running in this cluster.
 
   return {
     server: { 
