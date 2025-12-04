@@ -10,11 +10,10 @@ public class GlobalCORSConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow all paths
-                .allowedOrigins("http://localhost:5080",
-                                "http://localhost:80") // Whitelist these origins
+                .allowedOriginPatterns("*") // Whitelist these origins
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // The allowed HTTP methods
                 .allowedHeaders("*")
-                .allowCredentials(true) // Allow credentials
+                .allowCredentials(false) // Allow credentials
                 .maxAge(3600); // Cache preflight response for 1 hour
     }
 }

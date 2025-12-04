@@ -19,6 +19,9 @@ spec:
       containers:
         - name: #@ data.values.app_name_ui
           image: #@ data.values.uiimage.url
+          env: 
+            - name: "VITE_API_BASE_URL"
+              value: #@ data.values.backend_url
           ports:
             - containerPort: 8080
 ---
@@ -33,3 +36,23 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ui-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "ui.versioning.demo.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: #@ data.values.app_name_ui + "-service"
+            port:
+              number: 8080

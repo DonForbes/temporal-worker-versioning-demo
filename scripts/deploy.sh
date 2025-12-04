@@ -47,7 +47,6 @@ ytt -f ${SCRIPT_DIR}/../k8s/frontend-deployment.yaml  -f ${SCRIPT_DIR}/../k8s/wo
 ytt -f ${SCRIPT_DIR}/../k8s/worker-deployment.yaml  -f ${SCRIPT_DIR}/../k8s/worker-versioning-values.yaml --data-values-env WORKER_VERSION | kubectl apply -f -
 kubectl apply -f ${SCRIPT_DIR}/../k8s/temporal-connection.yaml
 #kubectl apply -f ${SCRIPT_DIR}/../k8s/ingress-route.yaml
-kubectl apply -f ${SCRIPT_DIR}/../k8s/service.yaml
 kubectl get pods
 kubectl get secrets 
 

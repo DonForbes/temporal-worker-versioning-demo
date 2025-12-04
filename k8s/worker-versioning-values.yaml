@@ -2,3 +2,4 @@
 ---
 app_name: temporal-worker-versioning
 app_name_ui: temporal-worker-versioning-ui
+backend_url: http://worker.versioning.demo.com

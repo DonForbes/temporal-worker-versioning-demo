@@ -41,8 +41,43 @@ spec:
           volumeMounts:
             - mountPath: /etc/certs
               name: certs
+          ports:
+            - containerPort: 6080
       volumes:
         - name: certs
           secret:
             defaultMode: 420
             secretName: temporal-auth-tls
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: #@ data.values.app_name + "-service"
+spec:
+  selector:
+    app: #@ data.values.app_name
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 6080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: worker-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx 
+  rules:
+  - host: "worker.versioning.demo.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: #@ data.values.app_name + "-service"
+            port:
+              number: 80
