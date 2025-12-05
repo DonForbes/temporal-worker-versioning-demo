@@ -3,6 +3,7 @@ import App from '../layout/App';
 import HomePage from '../../features/home/HomePage';
 import UnpinnedTestResults from '../../features/home/UnpinnedTestResults';
 import PinnedWorkflowManagement from '../../features/home/PinnedWorkflowManagement';
+import UnpinnedWorkflowManagement from '../../features/home/UnpinnedWorkflowManagement';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
       { path: 'activities', element: <div>Activities</div> },
       { path: 'createActivity', element: <div>Create Activity</div> },
       { path: 'results/:workflowPrefix', element: <UnpinnedTestResults /> },
-      { path: 'pinned', element: <PinnedWorkflowManagement /> }
+      { path: 'pinned', element: <PinnedWorkflowManagement /> },
+      { path: 'unpinned', element: <UnpinnedWorkflowManagement /> }
     ]
   }
 ]);

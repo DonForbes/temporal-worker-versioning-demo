@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import http from '../../lib/http/axios'
-import { Box, Button, Container, TextField, Typography, Alert, Stack } from '@mui/material'
+import { Box, Button, Container, TextField, Alert, Stack } from '@mui/material'
 
 type OnboardingRequest = {
   userName: string
@@ -15,7 +15,7 @@ export default function SubmitPinnedWorkflow() {
     userName: 'donald',
     userFirstName: 'Don',
     userLastName: 'Forbes',
-    userEmail: 'donald.forbes@tempporal.io'
+    userEmail: 'donald.forbes@temporal.io'
   })
 
   const [submitting, setSubmitting] = useState(false)
@@ -57,11 +57,6 @@ export default function SubmitPinnedWorkflow() {
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
       <Stack spacing={2} component="form" onSubmit={handleSubmit}>
-        <Typography variant="h4">Submit Pinned Workflow</Typography>
-
-        {successMsg && <Alert severity="success">{successMsg}</Alert>}
-        {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
-
         <TextField
           label="User Name"
           value={form.userName}
@@ -88,8 +83,19 @@ export default function SubmitPinnedWorkflow() {
           required
         />
 
-        <Box>
-          <Button type="submit" variant="contained" disabled={submitting}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ minHeight: 36, display: 'flex', alignItems: 'center' }}>
+            {errorMsg ? (
+              <Alert severity="error" sx={{ p: 0.5, px: 1.25, m: 0 }}>
+                {errorMsg}
+              </Alert>
+            ) : successMsg ? (
+              <Alert severity="success" sx={{ p: 0.5, px: 1.25, m: 0 }}>
+                {successMsg}
+              </Alert>
+            ) : null}
+          </Box>
+          <Button type="submit" variant="contained" disabled={submitting} sx={{ textTransform: 'none' }}>
             {submitting ? 'Submitting…' : 'Start Onboarding'}
           </Button>
         </Box>
