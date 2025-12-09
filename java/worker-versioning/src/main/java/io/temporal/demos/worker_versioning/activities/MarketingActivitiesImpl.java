@@ -3,6 +3,8 @@ package io.temporal.demos.worker_versioning.activities;
 import io.temporal.demos.worker_versioning.model.MarketingBundle;
 import io.temporal.demos.worker_versioning.model.MarketingCampaign;
 import io.temporal.spring.boot.ActivityImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
 @Component
 @ActivityImpl
 public class MarketingActivitiesImpl implements MarketingActivities{
+    private static final Logger logger = LoggerFactory.getLogger(MarketingActivitiesImpl.class);
 
     @Override
     public MarketingBundle getMarketingBundle(String campaignName) {
