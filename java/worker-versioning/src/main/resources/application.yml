@@ -34,6 +34,7 @@ spring:
           default-versioning-behavior: "AUTO_UPGRADE"
         workflow-classes:
           - io.temporal.demos.worker_versioning.workflows.MarketingWorkflowImpl
+          - io.temporal.demos.worker_versioning.workflows.MarketingSendCampaignImpl
         activity-beans:
           - marketingActivitiesImpl
 
