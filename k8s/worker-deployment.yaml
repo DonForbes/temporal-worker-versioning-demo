@@ -16,9 +16,9 @@ spec:
     strategy: Progressive
     steps: 
       - rampPercentage: 10
-        pauseDuration: 1m
+        pauseDuration: 30s
       - rampPercentage: 80
-        pauseDuration: 1m
+        pauseDuration: 30s
   sunset:
     scaledownDelay: 2m
     deleteDelay: 2m

@@ -10,5 +10,8 @@ minikube start
 minikube addons enable ingress
 
 and run minikube tunnel prior to running apps.
+```
+$ sudo minikube tunnel
+```
 
  
