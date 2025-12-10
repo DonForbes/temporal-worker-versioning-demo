@@ -1,4 +1,4 @@
-import { Container, Typography, Stack, Button } from "@mui/material";
+import { Container, Typography, Stack, Button, Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 
@@ -19,34 +19,64 @@ export default function HomePage() {
 
             </Typography>
           <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
-            <Button
-              component={NavLink}
-              to="/unpinned"
-              variant="contained"
-              sx={{
-                flex: 1,
-                bgcolor: '#182a73',
-                color: '#fff',
-                textTransform: 'none',
-                '&:hover': { bgcolor: '#13215a' }
-              }}
-            >
-              Go to Unpinned Workflow Management
-            </Button>
-            <Button
-              component={NavLink}
-              to="/pinned"
-              variant="contained"
-              sx={{
-                flex: 1,
-                bgcolor: '#182a73',
-                color: '#fff',
-                textTransform: 'none',
-                '&:hover': { bgcolor: '#13215a' }
-              }}
-            >
-              Go to Pinned Workflow Management
-            </Button>
+            <Stack spacing={1} sx={{ flex: 1 }}>
+              <Button
+                component={NavLink}
+                to="/unpinned"
+                variant="contained"
+                sx={{
+                  bgcolor: '#182a73',
+                  color: '#fff',
+                  textTransform: 'none',
+                  '&:hover': { bgcolor: '#13215a' }
+                }}
+              >
+                Go to Unpinned Workflow Management
+              </Button>
+              <Box sx={{ height: 16 }} /> 
+              <Typography variant="body2" color="text.secondary">
+                <Typography variant="h5">Example Unpinned</Typography> 
+                <br></br> Marketing campaign that may take time to run but the 
+                business wants to use the latest capabilities at all times.
+              </Typography>
+              <Box
+                component="img"
+                src="/images/marketing-campaign-workflow.jpg"
+                alt="Example Unpinned: Marketing campaign workflow"
+                sx={{ width: '100%', height: 'auto', borderRadius: 1 }}
+                loading="lazy"
+              />
+            </Stack>
+
+            <Stack spacing={1} sx={{ flex: 1 }}>
+              <Button
+                component={NavLink}
+                to="/pinned"
+                variant="contained"
+                sx={{
+                  bgcolor: '#182a73',
+                  color: '#fff',
+                  textTransform: 'none',
+                  '&:hover': { bgcolor: '#13215a' }
+                }}
+              >
+                Go to Pinned Workflow Management
+              </Button>
+              <Box sx={{ height: 16 }} /> 
+              <Typography variant="body2" color="text.secondary">
+                <Typography variant="h5">Example pinned</Typography> <br></br>
+                An onbaording workflow to capture and provision systems for a
+                 new user.  Something that when started must follow the steps
+                  as defined at the time the process was started.
+              </Typography>
+              <Box
+                component="img"
+                src="/images/onboarding-workflow.jpg"
+                alt="Example pinned: Onboarding workflow"
+                sx={{ width: '100%', height: 'auto', borderRadius: 1 }}
+                loading="lazy"
+              />
+            </Stack>
           </Stack>
         </Stack>
     </Container>

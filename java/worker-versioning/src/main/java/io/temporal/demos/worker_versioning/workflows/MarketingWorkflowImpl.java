@@ -7,6 +7,7 @@ import io.temporal.demos.worker_versioning.model.MarketingBundle;
 import io.temporal.demos.worker_versioning.model.MarketingCampaign;
 import io.temporal.spring.boot.WorkflowImpl;
 import io.temporal.workflow.Async;
+import io.temporal.workflow.ChildWorkflowOptions;
 import io.temporal.workflow.Promise;
 import io.temporal.workflow.Workflow;
 import org.slf4j.Logger;
@@ -31,8 +32,12 @@ public class MarketingWorkflowImpl implements MarketingWorkflow {
         List<Promise<Void>> promises = new ArrayList<>();
 
         for (String targetChannel : bundle.getChannels()) {
+            ChildWorkflowOptions options =
+                    ChildWorkflowOptions.newBuilder()
+                            .setWorkflowId(Workflow.getInfo().getWorkflowId() + "-" + targetChannel)
+                            .build();
             // 1. Start the child workflow asynchronously
-            MarketingSendCampaign sendCampaign = Workflow.newChildWorkflowStub(MarketingSendCampaign.class);
+            MarketingSendCampaign sendCampaign = Workflow.newChildWorkflowStub(MarketingSendCampaign.class, options);
             Promise<Void> promise = Async.procedure(sendCampaign::sendMarketingCampaign, campaign,targetChannel);
             promises.add(promise);
         }
