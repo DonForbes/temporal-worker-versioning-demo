@@ -10,8 +10,8 @@ spec:
   replicas: 1
   workerOptions:
     connectionRef:
-      name: donald-demo
-    temporalNamespace: donald-demo.sdvdw
+      name: #@ data.values.temporal_namespace.split(".",1)[0]
+    temporalNamespace: #@ data.values.temporal_namespace
   rollout:
     strategy: Progressive
     steps: 
