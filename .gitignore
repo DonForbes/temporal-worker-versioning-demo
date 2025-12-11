@@ -11,6 +11,7 @@ target
 /out
 /core/out
 /springboot/out
+/node_modules
 .classpath
 .project
 .settings/
