@@ -28,6 +28,7 @@ export default function UnpinnedTestResults() {
   const [didFetchFinal, setDidFetchFinal] = useState<boolean>(false);
   const [finalFetching, setFinalFetching] = useState<boolean>(false);
   const [finalResults, setFinalResults] = useState<QueryResponse | null>(null);
+  const [retryNote, setRetryNote] = useState<string | null>(null);
 
   const body = useMemo(() => ({
     workflowPrefix: workflowPrefix ?? "",
@@ -73,6 +74,7 @@ export default function UnpinnedTestResults() {
         if (stopped) return;
         setData(res.data);
         setError(null);
+        setRetryNote(null);
         setLoading(false);
         // Snapshot percentages for chart
         const total = res.data.workflowTotal;
@@ -124,8 +126,16 @@ export default function UnpinnedTestResults() {
             }
           }
         }
-      } catch (err) {
+      } catch (err: any) {
         if (stopped) return;
+        const status = err?.response?.status;
+        if (status === 500) {
+          const msg = (err?.response?.data?.message as string) || (err?.message as string) || "Server error";
+          setRetryNote(`${msg} - retrying`);
+          // Retry after 1 second
+          window.setTimeout(() => { if (!stopped) void tick(false); }, 1000);
+          return;
+        }
         setError(err instanceof Error ? err.message : "Failed to query results");
         setLoading(false);
       }
@@ -268,7 +278,11 @@ export default function UnpinnedTestResults() {
         </Typography>
 
         {loading && <LinearProgress />}
-        {error && <Alert severity="error">{error}</Alert>}
+        {retryNote ? (
+          <Typography variant="body2" color="text.secondary">{retryNote}</Typography>
+        ) : (
+          error && <Alert severity="error">{error}</Alert>
+        )}
 
         {data && (
           <Paper variant="outlined" sx={{ p: 2 }}>

@@ -150,15 +150,14 @@ export default function PinnedWorkflowManagement() {
           </Box>
           <Paper variant="outlined" sx={{ p: 2, maxWidth: 420, bgcolor: '#fafafa' }}>
             <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-              Example Pinned workflow - User Onboarding
+              Example - User Onboarding
             </Typography>
             <Typography variant="body2">
               Using this screen you can start an "onboarding workflow". It will be picked up by 
               a worker that will define the worker version to use. It will remain on this 
               worker version until it completes.  New onboarding workflows can be started any time and 
               will use the latest worker version.
-              <br /><br />
-              TODO - Add small graphic of the onboarding workflow.
+          
               <br /><br />
               Using the Sign Documents button a signal can be sent to the workflow to progress towards completion.
             </Typography>

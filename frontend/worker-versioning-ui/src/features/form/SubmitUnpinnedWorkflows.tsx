@@ -19,8 +19,8 @@ export default function SubmitUnpinnedWorkflows() {
   }
   const [form, setForm] = useState<UnpinnedWorkflowsTest>({
     testPrefix: generateDefaultPrefix(),
-    numberOfWorkflows: 1000,
-    workflowStartRatePerSecond: 5,
+    numberOfWorkflows: 500,
+    workflowStartRatePerSecond: 3,
   })
 
   const [submitting, setSubmitting] = useState(false)
