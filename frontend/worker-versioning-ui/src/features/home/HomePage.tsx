@@ -1,10 +1,10 @@
-import { Container, Typography, Stack, Button, Box } from "@mui/material";
+import { Container, Typography, Stack, Button, Box, Paper } from "@mui/material";
 import { NavLink } from "react-router-dom";
-
 
 export default function HomePage() {
   return (
     <Container sx={{mt: 3}}>
+        <Paper elevation={0} sx={{ p: 2, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.92)' }}>
         <Stack spacing={2}>
           <Typography variant="h3">Worker Versioning for Pinned and Unpinned workflows</Typography>
           <Typography variant="body1">Worker versioning allows for a controlled rollout of new worker versions.  Workflows 
@@ -79,6 +79,7 @@ export default function HomePage() {
             </Stack>
           </Stack>
         </Stack>
+        </Paper>
     </Container>
   )
 }

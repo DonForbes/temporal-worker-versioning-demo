@@ -117,6 +117,7 @@ export default function PinnedWorkflowManagement() {
 
   return (
     <Container sx={{ mt: 3 }}>
+      <Paper elevation={0} sx={{ p: 2, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.92)' }}>
       <Stack spacing={2}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h3">Pinned Workflow Management</Typography>
@@ -207,6 +208,7 @@ export default function PinnedWorkflowManagement() {
         {actionMsg && <Alert severity="success" onClose={() => setActionMsg(null)}>{actionMsg}</Alert>}
         {actionError && <Alert severity="error" onClose={() => setActionError(null)}>{actionError}</Alert>}
       </Stack>
+      </Paper>
     </Container>
   )
 }
